@@ -9,6 +9,8 @@ const allGames = [
     { title: "Ammo Fever: Tower Gun Defense", category: "all", score: "4/10", opinion: "Bikarçılıqdan oynamaq olar."},
     { title: "Archers Online: PvP", category: "all", score: "5/10", opinion: "Əslində maraqlı oyundu."},
 
+    { title: "Battle Time", category: "all ali-favorites top10", score: "10/10", opinion: "Uşaqlığımın fav oyunu."},
+    { title: "Battle Time 2", category: "all ali-favorites top10", score: "10/10", opinion: "Uşaqlığımın fav oyununun davamı."},
     { title: "Brawl Stars", category: "all active top10 ali-favorites", score: "8/10", opinion: "Oyunu hər nə qədər bəyənsəmdə bir yaxşı güncəlləmə gətirə bilmirlər."},
     { title: "Bad 2 Bad: Apocalypse", category: "all", score: "7/10", opinion: "Yaxşı mənada qəribə oyun idi. Çoxda oynanılası gəlmədi."},
     { title: "Brotato", category: "all ali-favorites", score: "8/10", opinion: "Arada komputerdə sıxılanda oynayıram. Mobile olanıda yaxşıdı."},
@@ -50,12 +52,17 @@ const allGames = [
     { title: "Lumber Empire: Idle Wood Inc", category: "all", score: "4/10", opinion: "Vaxt keçirməlik sıxıcı bir oyun."},
     { title: "Map Game", category: "all ali-favorites", score: "6/10", opinion: "İnteraktiv xəritə oyunudu, ölkə tapırsan sadəcə."},
     { title: "Pickle Pete: Survivor", category: "all ali-favorites", score: "8/10", opinion: "Əvvəl dəli kimi uşaqlarnan yarışırdıq."},
-    { title: "We Are Warriors!", category: "all", score: "6/10", opinion: "Şirin oyundu."},
-    { title: "Warriors Market Mayhem VIP", category: "all", score: "4/10", opinion: "Nə qədər oyun var oynamışam."},
     { title: "Royal Match", category: "all ali-favorites", score: "7/10", opinion: "Reklamsız olması əladı."},
     { title: "Pill Fortress", category: "all", score: "5/10", opinion: "Eh, yəni idarə edər."},
+    { title: "Hocus.", category: "all", score: "6/10", opinion: "Beyin yakmalı oyun."},
+    
+    { title: "Sea Battle 2: Warship Online", category: "all", score: "8/10", opinion: "Yaxşı oyundu, oynanıla bilər."},
+    { title: "Slither.io", category: "all", score: "8/10", opinion: "O vaxtın gözəl oyunlarından biriydi."},
     { title: "Stick War: Saga", category: "all ali-favorites active", score: "8/10", opinion: "Bunun ikinci oyunuda əlaydı, buda eyniylə."},
     { title: "Stick War: Legacy", category: "all ali-favorites top10", score: "9/10", opinion: "Uşaqkən oynayırdım. Tövsiyyə edirəm."},
+
+    { title: "We Are Warriors!", category: "all", score: "6/10", opinion: "Şirin oyundu."},
+    { title: "Warriors Market Mayhem VIP", category: "all", score: "4/10", opinion: "Nə qədər oyun var oynamışam."},
 ];
 
 const navButtons = document.querySelectorAll('.nav-button');
