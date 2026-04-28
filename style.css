@@ -1,441 +1,711 @@
+/* =============================================
+   ƏSAS DƏYİŞƏNLƏR (Default: Cyber Mavi Tema)
+   ============================================= */
 :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #66BB6A;
-    --background-color: #eaeaea; /* Açıq boz fon */
-    --text-color: #000;
-    --dark-text: #000;
-    --border-color: #b0b0b0; /* Daha tünd sərhəd rəngi */
-    --header-bg: #e8f5e9; 
-    --line-color: #ddd; /* Sətir sərhədi üçün açıq rəng */
+    --primary:      #00e5ff;
+    --primary-dim:  #00b4cc;
+    --accent:       #ff6b35;
+    --bg-deep:      #050d1a;
+    --bg-mid:       #0a1628;
+    --bg-card:      rgba(255,255,255,0.04);
+    --bg-card-hov:  rgba(255,255,255,0.08);
+    --glass-border: rgba(0,229,255,0.18);
+    --text:         #e8f4f8;
+    --text-muted:   #7a9bb5;
+    --score-color:  #00e5ff;
+    --header-bg:    rgba(5,13,26,0.85);
+    --glow:         0 0 40px rgba(0,229,255,0.15);
+    --shadow-card:  0 4px 24px rgba(0,0,0,0.45);
 }
+
+/* ── Qırmızı-Qara Tema ── */
+.theme-red-black {
+    --primary:      #ff4500;
+    --primary-dim:  #cc3700;
+    --accent:       #ff9800;
+    --bg-deep:      #0d0000;
+    --bg-mid:       #1a0505;
+    --bg-card:      rgba(255,69,0,0.06);
+    --bg-card-hov:  rgba(255,69,0,0.12);
+    --glass-border: rgba(255,69,0,0.25);
+    --text:         #ffe8e0;
+    --text-muted:   #9e6555;
+    --score-color:  #ff4500;
+    --header-bg:    rgba(13,0,0,0.9);
+    --glow:         0 0 40px rgba(255,69,0,0.2);
+}
+
+/* ── Narıncı-Tünd Tema ── */
+.theme-orange-dark {
+    --primary:      #ffa500;
+    --primary-dim:  #cc8400;
+    --accent:       #ff6b6b;
+    --bg-deep:      #050500;
+    --bg-mid:       #111100;
+    --bg-card:      rgba(255,165,0,0.06);
+    --bg-card-hov:  rgba(255,165,0,0.11);
+    --glass-border: rgba(255,165,0,0.22);
+    --text:         #fff8e8;
+    --text-muted:   #998833;
+    --score-color:  #ffa500;
+    --header-bg:    rgba(5,5,0,0.9);
+    --glow:         0 0 40px rgba(255,165,0,0.18);
+}
+
+/* ── Bənövşəyi Gecə Tema ── */
+.theme-purple-night {
+    --primary:      #a855f7;
+    --primary-dim:  #7c3aed;
+    --accent:       #ec4899;
+    --bg-deep:      #07030f;
+    --bg-mid:       #100820;
+    --bg-card:      rgba(168,85,247,0.07);
+    --bg-card-hov:  rgba(168,85,247,0.13);
+    --glass-border: rgba(168,85,247,0.25);
+    --text:         #f0e8ff;
+    --text-muted:   #7a5da0;
+    --score-color:  #a855f7;
+    --header-bg:    rgba(7,3,15,0.9);
+    --glow:         0 0 40px rgba(168,85,247,0.2);
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 0;
-    color: var(--text-color);
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.5s, color 0.3s;
 }
 
+/* ── Arxa fon parçacıqları ── */
+.bg-particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.06;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.06; }
+    90%  { opacity: 0.06; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* =============================================
+   LOADING SCREEN
+   ============================================= */
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-deep);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease;
+}
+
+#loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-content { text-align: center; }
+
+.loader-ring {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255,255,255,0.08);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loader-text {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
 header {
-    background-color: var(--header-bg); /* DƏYİŞDİRİLDİ */
-    padding: 20px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--header-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glow), 0 2px 20px rgba(0,0,0,0.5);
+    transition: background 0.4s;
+}
+
+.header-glow {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.7;
+}
+
+.header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Logo */
+.logo-area { display: flex; align-items: center; gap: 12px; }
+
+.logo-icon {
+    font-size: 1.8em;
+    filter: drop-shadow(0 0 8px var(--primary));
+    animation: pulse-icon 3s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { filter: drop-shadow(0 0 6px var(--primary)); }
+    50%       { filter: drop-shadow(0 0 16px var(--primary)); }
 }
 
 h1 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 2.5em;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.7em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
 }
 
+h1 .accent { color: var(--primary); }
+
+.header-subtitle {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Nav */
 nav {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-    padding: 0 20px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .nav-button {
-    background-color: white;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    padding: 10px 20px;
-    font-size: 1em;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88em;
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-    font-weight: bold;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s;
+    letter-spacing: 0.02em;
 }
 
 .nav-button:hover {
-    background-color: var(--secondary-color);
-    color: white;
+    color: var(--primary);
+    border-color: var(--glass-border);
+    background: var(--bg-card);
 }
 
 .nav-button.active {
-    background-color: var(--primary-color);
-    color: white;
+    color: var(--bg-deep);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 16px rgba(0,229,255,0.35);
 }
 
-/* Parametrlər və Paylaşma düymələrini sağ üstdə bir yerdə saxlayan konteyner */
-.settings-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.nav-icon { font-size: 1em; }
+
+/* Header actions */
+.header-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 8px;
+    position: relative;
 }
 
-/* Ümumi Hərəkət Düyməsi Stili */
-.action-button {
-    padding: 8px 15px;
-    background-color: var(--primary-color);
-    color: var(--text-color); /* DƏYİŞDİRİLDİ: Mətn rəngi mövzuya uyğun dəyişsin */
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
+.settings-wrapper { position: relative; }
+
+.icon-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 1.1em;
     cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
 }
 
-/* QEYD: Əgər bu mətnin rəngi tünd mövzularda oxunmaz olsa, onun rəngini konkret ağ (#fff) etməli ola bilərik. Amma hazırda `var(--text-color)` ilə yoxlamaq lazımdır. */
-
-.action-button:hover {
-    background-color: var(--secondary-color);
+.icon-btn:hover {
+    background: var(--bg-card-hov);
+    border-color: var(--primary);
+    box-shadow: 0 0 12px rgba(0,229,255,0.2);
+    transform: translateY(-1px);
 }
 
-.share-button-style {
-    /* Fon rəngi action-button tərəfindən idarə olunur */
-}
+.icon-btn:active { transform: scale(0.93); }
 
-/* PARAMETRLƏR MENYUSU (AÇILAN PƏNCƏRƏ) */
+/* Settings menu */
 #settings-menu {
     position: absolute;
-    top: 45px;
+    top: calc(100% + 10px);
     right: 0;
-    width: 250px;
-    background-color: var(--header-bg); /* DƏYİŞDİRİLDİ: Fon header rəngini alsın */
-    color: var(--text-color); /* DƏYİŞDİRİLDİ: Mətn rəngi mövzuya uyğun dəyişsin */
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    width: 220px;
+    background: var(--bg-mid);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6), var(--glow);
+    padding: 12px;
     z-index: 1000;
+    backdrop-filter: blur(20px);
+    animation: popIn 0.2s ease;
 }
 
-.settings-menu-hidden {
-    display: none !important; /* JavaScript ilə açılıb bağlanacaq */
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.setting-group {
-    margin-bottom: 15px;
-}
+.settings-menu-hidden { display: none !important; }
 
-.setting-group label {
-    display: block;
-    font-weight: bold;
+.settings-header {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    padding: 4px 8px 10px;
+    border-bottom: 1px solid var(--glass-border);
     margin-bottom: 8px;
-    font-size: 0.9em;
 }
 
-.theme-options {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+.theme-options { display: flex; flex-direction: column; gap: 6px; }
 
 .theme-button {
-    padding: 8px;
-    background-color: var(--background-color); /* DƏYİŞDİRİLDİ: Əsas fon rəngini alsın */
-    color: var(--text-color); /* DƏYİŞDİRİLDİ: Əsas mətn rəngini alsın */
-    border: 1px solid var(--line-color); 
-    border-radius: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.2s;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    text-align: left;
 }
 
 .theme-button:hover {
-    background-color: var(--border-color); /* DƏYİŞDİRİLDİ: Hover rəngini dəyişənlə tənzimlə */
+    background: var(--bg-card-hov);
+    border-color: var(--primary);
+    transform: translateX(3px);
 }
 
-/* YENİ MÖVZU RƏNGLƏRİ (ROOT dəyişənlərini dəyişmək üçün siniflər) */
-
-/* 1. Qırmızı-Qara Mövzu */
-.theme-red-black {
-    --primary-color: #FF4500; 
-    --secondary-color: #FF6347; 
-    --background-color: #222; 
-    --text-color: #fff; /* Tünd fonda ağ mətn qaldı, əks halda görünməyəcək */
-    --dark-text: #fff; 
-    --border-color: #888;
-    --header-bg: #444; 
-    --line-color: #333; 
+.theme-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
 }
 
-/* 2. Ağ, Qara və Narıncı Mövzu */
-.theme-orange-dark {
-    --primary-color: #FFA500; 
-    --secondary-color: #FFC468;
-    --background-color: #000; 
-    --text-color: #fff; /* Tünd fonda ağ mətn qaldı */
-    --dark-text: #fff; 
-    --border-color: #FFA500; 
-    --header-bg: #1a1a1a;
-    --line-color: #2a2a2a; 
-}
-
+/* =============================================
+   MAIN
+   ============================================= */
 main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: transparent; /* DƏYİŞDİRİLDİ */
-    box-shadow: none; /* Kölgəni ləğv etdim */
-    border-radius: 0; /* Kəskin kənarları ləğv etdim */
+    max-width: 1280px;
+    margin: 28px auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
 }
 
-/* FILTR DÜYMƏLƏRİ VƏ AXTARIŞ STİLLƏRİ */
-.filter-controls {
+/* Stats bar */
+.stats-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
+}
+
+.stat-chip:hover {
+    background: var(--bg-card-hov);
+    border-color: var(--primary);
+    box-shadow: 0 0 12px rgba(0,229,255,0.1);
+}
+
+.stat-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Controls row */
+.controls-row {
     display: flex;
     align-items: center;
-    gap: 15px; /* Boşluğu artırdım */
-    margin-bottom: 15px;
-    padding: 0 10px;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 
-.filter-controls span {
-    font-weight: bold;
-    color: var(--text-color);
+.search-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0 12px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-wrap:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 12px rgba(0,229,255,0.15);
+}
+
+.search-icon { font-size: 0.95em; color: var(--text-muted); margin-right: 8px; }
+
+#search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95em;
+    padding: 10px 0;
+    width: 100%;
+}
+
+#search-input::placeholder { color: var(--text-muted); }
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.sort-label {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 4px;
 }
 
 .filter-button {
-    background-color: white;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    padding: 5px 10px;
-    font-size: 0.9em;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85em;
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
 }
 
 .filter-button:hover {
-    background-color: var(--secondary-color);
-    color: white;
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--bg-card-hov);
 }
 
-/* YENİ AXTARIŞ INPUT STİLİ */
-#search-input {
-    padding: 8px 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    flex-grow: 1; /* Axtarış sahəsi maksimum yer tutsun */
-    max-width: 300px;
+.filter-button.active {
+    color: var(--bg-deep);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(0,229,255,0.25);
 }
 
-#search-input:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-}
-/* AXTARIŞ INPUT STİLİ SONU */
-
-
-/* Oyunlar üçün Konteyner (Çərçivə) */
+/* =============================================
+   GAME LIST
+   ============================================= */
 #game-list-container {
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    margin-top: 20px;
-    padding: 0; 
-    overflow: hidden; 
-    background-color: transparent; /* Fonu şəffaf et */
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
 }
 
-/* Cədvəl Başlıqları Stili - YENİLƏNDİ */
 .list-header {
     display: flex;
-    background-color: var(--header-bg); 
-    border-bottom: 1px solid var(--border-color);
-    padding: 15px 20px;
-    font-weight: bold;
-    color: var(--primary-color);
+    align-items: center;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--glass-border);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.78em;
+    font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.9em;
+    letter-spacing: 0.12em;
+    color: var(--primary);
 }
 
-.list-header .header-number {
-    flex: 0.5; /* Sıra nömrəsi üçün az yer */
-}
-.list-header .header-title {
-    flex: 2; /* Oyun adı */
-}
-.list-header .header-score {
-    flex: 1; /* Təxmini Oynama Müddəti SÜTUNUNUN FLEX DƏYƏRİ EYNİ QALIR */
-    /* Əlavə dəyişikliyə ehtiyac yoxdur, çünki adını HTML-də dəyişdiniz */
-}
-.list-header .header-opinion {
-    flex: 3; /* Əlinin Fikri */
-}
+.header-number  { flex: 0 0 48px; }
+.header-title   { flex: 2; }
+.header-score   { flex: 0 0 80px; text-align: center; }
+.header-opinion { flex: 3; padding-left: 16px; }
 
-/* Oyun Siyahısının Özü */
-#game-list {
-    min-height: 300px;
-    padding: 0 20px; 
-}
+#game-list { padding: 8px 0; min-height: 300px; }
 
 .placeholder-text {
     text-align: center;
-    color: #999;
+    color: var(--text-muted);
     font-style: italic;
-    padding-top: 50px;
+    padding: 60px 20px;
 }
 
-/* Oyun Elementi Sətir Stili - YENİLƏNDİ */
+/* Game Item */
 .game-item {
-    display: flex; 
+    display: flex;
     align-items: flex-start;
-    border-bottom: 1px solid var(--line-color); 
-    padding: 15px 0;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s, transform 0.15s;
+    cursor: default;
+    animation: fadeSlideIn 0.35s ease both;
 }
 
-/* Oyun elementlərinin sütunları - YENİLƏNDİ */
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.game-item:last-child { border-bottom: none; }
+
+.game-item:hover {
+    background: var(--bg-card-hov);
+    transform: translateX(4px);
+}
+
 .game-number {
-    flex: 0.5; /* Sıra nömrəsi */
-    padding-right: 15px;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-.game-title {
-    flex: 2; /* Oyun adı */
-    padding-right: 15px;
-    word-wrap: break-word; 
-    color: var(--dark-text);
-    font-weight: bold;
-    font-size: 1.1em;
-}
-.game-score { /* game-details yerinə gəlir */
-    flex: 1; 
-    padding-right: 15px; 
-    font-weight: bold;
-    font-size: 1em;
-}
-.game-opinion {
-    flex: 3; /* Əlinin Fikri */
-    padding-right: 15px;
-    word-wrap: break-word; 
+    flex: 0 0 48px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85em;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding-top: 2px;
 }
 
-/* Footer Style */
+.game-title {
+    flex: 2;
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--text);
+    padding-right: 12px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.game-score {
+    flex: 0 0 80px;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.05em;
+    color: var(--score-color);
+    text-shadow: 0 0 8px var(--score-color);
+    padding-right: 8px;
+}
+
+.game-opinion {
+    flex: 3;
+    font-size: 0.88em;
+    color: var(--text-muted);
+    padding-left: 16px;
+    line-height: 1.55;
+    word-break: break-word;
+    border-left: 1px solid var(--glass-border);
+}
+
+/* Xal rəngi skalası */
+.game-item[data-score="10"] .game-score { color: #ffd700; text-shadow: 0 0 12px #ffd700; }
+.game-item[data-score="9"]  .game-score { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
+.game-item[data-score="8"]  .game-score { color: #4caf50; text-shadow: 0 0 8px #4caf50; }
+.game-item[data-score="7"]  .game-score { color: #8bc34a; }
+.game-item[data-score="6"]  .game-score { color: #ffc107; }
+.game-item[data-score="5"]  .game-score { color: #ff9800; }
+.game-item[data-score="4"]  .game-score { color: #ff5722; }
+.game-item[data-score="3"],
+.game-item[data-score="2"],
+.game-item[data-score="1"]  { opacity: 0.75; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
 footer {
     text-align: center;
-    padding: 10px;
-    margin-top: 30px;
-    color: var(--primary-color);
-    font-size: 0.8em;
+    padding: 24px;
+    margin-top: 40px;
+    color: var(--text-muted);
+    font-size: 0.82em;
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 1;
 }
 
+footer a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
 
-/* Yuxarı Qayıt Düyməsinin Stili */
+footer a:hover { opacity: 0.7; }
+
+/* =============================================
+   SCROLL TO TOP
+   ============================================= */
 #scroll-to-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 15px;
-    background-color: var(--secondary-color);
-    color: white;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--primary);
+    color: var(--bg-deep);
     border: none;
-    border-radius: 50%; /* Dairəvi forma */
-    font-size: 1.2em;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 999;
-    transition: opacity 0.3s, visibility 0.3s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 20px rgba(0,229,255,0.3);
+    transition: all 0.3s;
 }
 
 #scroll-to-top:hover {
-    background-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 28px rgba(0,229,255,0.45);
 }
 
-/* Düyməni gizlətmək üçün sinif */
-.scroll-to-top-hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-/* ======================================= */
-/* MEDİA SORĞULARI (MOBİL UYĞUNLUQ) */
-/* ======================================= */
+.scroll-to-top-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* 1. PLANŞET ÖLÇÜSÜ ÜÇÜN DƏYİŞİKLİKLƏR (Maksimum 768px) */
-@media (max-width: 768px) {
-    
-    /* Main konteyneri daha geniş et */
-    main {
-        padding: 10px;
-        margin: 10px auto;
+/* =============================================
+   MOBİL
+   ============================================= */
+@media (max-width: 900px) {
+    .header-inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
     }
 
-    /* Başlıqdakı böyük şrifti kiçilt */
-    h1 {
-        font-size: 2em;
+    nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        gap: 6px;
     }
 
-    /* Naviqasiya düymələri və filtr düymələri arasındakı boşluğu azaldır */
-    nav, .filter-controls {
-        gap: 10px;
-        padding: 0 5px;
-        flex-wrap: wrap; /* İkinci sıraya keçməyə icazə verir */
-    }
-
-    /* Axtarış sahəsini böyüt */
-    #search-input {
-        max-width: 100%; /* Bütün eni tutur */
-    }
-
-    /* ƏLİNİN FİKRİ sütununu bir az kiçiltmək */
-    .list-header .header-opinion {
-        flex: 2; /* 3-dən 2-yə düşürdük */
-    }
-
-    .game-opinion {
-        flex: 2; /* 3-dən 2-yə düşürdük */
-        font-size: 0.9em; /* Mətni kiçiltmək */
-    }
+    .nav-button { padding: 7px 12px; font-size: 0.82em; }
 }
 
-/* 2. KİÇİK MOBİL TELEFONLAR ÜÇÜN DƏYİŞİKLİKLƏR (Maksimum 576px) */
-@media (max-width: 576px) {
-    
-    /* Ən dar ekranlarda bəzi sütunları gizlətmək */
-    
-    /* ƏLİNİN FİKRİ (Opinion) sütununu tamamilə gizlət */
-    .list-header .header-opinion,
-    .game-opinion {
-        display: none !important;
-    }
+@media (max-width: 640px) {
+    .header-inner { padding: 12px 16px; gap: 12px; }
 
-    /* Sıra nömrəsi sütununu daha da kiçilt */
-    .list-header .header-number,
-    .game-number {
-        flex: 0.2; 
-        font-size: 0.8em;
-    }
+    h1 { font-size: 1.3em; }
+    .header-subtitle { display: none; }
+    .logo-icon { font-size: 1.4em; }
 
-    /* Xal (Score) sütununu kiçilt */
-    .list-header .header-score,
-    .game-score {
-        flex: 0.7; 
-        font-size: 0.9em;
-    }
+    main { padding: 0 12px; margin: 16px auto; }
 
-    /* Oyun Adı (Title) sütununu böyüt ki, boşluğu doldursun */
-    .list-header .header-title,
-    .game-title {
-        flex: 3;
-    }
+    .stats-bar { gap: 8px; }
+    .stat-chip { padding: 8px 14px; }
+    .stat-num { font-size: 1.3em; }
 
-    /* Parametrlər və Paylaşma düymələrini alt-alta yığ */
-    .settings-container {
-        position: static;
-        justify-content: space-around;
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-    /* Header-dəki paddingi azaldır */
-    header {
-        padding: 10px 0;
-    }
+    .controls-row { gap: 8px; }
+    .search-wrap { max-width: 100%; }
 
-    /* Parametrlər menyusunu ekranın bütün enində göstər */
-    #settings-menu {
-        right: 5px;
-        left: 5px;
-        width: auto;
-    }
+    .header-opinion,
+    .list-header .header-opinion { display: none; }
+
+    .game-number { flex: 0 0 32px; font-size: 0.78em; }
+    .game-score  { flex: 0 0 60px; font-size: 0.95em; }
+    .header-score { flex: 0 0 60px; }
+
+    #scroll-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+}
+
+@media (max-width: 420px) {
+    .sort-label { display: none; }
+    .filter-button { padding: 7px 10px; font-size: 0.8em; }
 }
