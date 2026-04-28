@@ -4,68 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Əlinin Seçilmiş Oyunları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Oyunlar</h1>
-        <div class="settings-container">
-            <button id="settings-button" class="action-button">⚙️ Parametrlər</button>
 
-            <div id="settings-menu" class="settings-menu-hidden">
-                <div class="setting-group">
-                    <label>Saytın Fonu:</label>
-                    <div class="theme-options">
-                        <button class="theme-button" data-theme="default">Yaşıl, Ağ</button>
-                        <button class="theme-button" data-theme="red-black">Qırmızı, Qara</button>
-                        <button class="theme-button" data-theme="orange-dark">Ağ, Qara və Narıncı</button>
-                    </div>
-                </div>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-ring"></div>
+            <p class="loader-text">Yüklənir...</p>
+        </div>
+    </div>
+
+    <!-- Background particles -->
+    <div class="bg-particles" id="bg-particles"></div>
+
+    <header>
+        <div class="header-glow"></div>
+        <div class="header-inner">
+            <div class="logo-area">
+                <span class="logo-icon">🎮</span>
+                <h1>Əlinin <span class="accent">Oyunları</span></h1>
+                <p class="header-subtitle">Şəxsi oyun kitabxanası</p>
             </div>
 
-            <button id="share-button-id" class="action-button share-button-style">💌 Paylaş</button>
-        </div>
-        <nav>
-            <button class="nav-button active" data-category="all">Ümumi Oyunlar</button>
-            <button class="nav-button" data-category="top10">Top 10</button>
-            <button class="nav-button" data-category="ali-favorites">Əlinin Vazgeçilməzləri</button>
-            <button class="nav-button" data-category="active">Aktiv Oynadıqlarım</button>
-        </nav>
-    </header>
-    
-    <main>
-        <div class="filter-controls">
-            <span>Sırala:</span>
-            <button class="filter-button" data-sort="az">A-Z ⬇️</button>
-            <button class="filter-button" data-sort="za">Z-A ⬆️</button>
-            <button class="filter-button" data-sort="score-high">Yüksək Xal ⭐</button>
+            <nav>
+                <button class="nav-button active" data-category="all">
+                    <span class="nav-icon">🕹️</span> Hamısı
+                </button>
+                <button class="nav-button" data-category="top10">
+                    <span class="nav-icon">🏆</span> Top 10
+                </button>
+                <button class="nav-button" data-category="ali-favorites">
+                    <span class="nav-icon">❤️</span> Sevimlilər
+                </button>
+                <button class="nav-button" data-category="active">
+                    <span class="nav-icon">🔥</span> Aktiv
+                </button>
+            </nav>
 
-            <input type="text" id="search-input" placeholder="Oyun axtar..." aria-label="Oyun axtar">
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" title="Mövzu dəyiş">🌙</button>
+                <div class="settings-wrapper">
+                    <button id="settings-button" class="icon-btn" title="Parametrlər">⚙️</button>
+                    <div id="settings-menu" class="settings-menu-hidden">
+                        <div class="settings-header">Mövzu seçin</div>
+                        <div class="theme-options">
+                            <button class="theme-button" data-theme="default">
+                                <span class="theme-dot" style="background:#00e5ff"></span>Cyber Mavi
+                            </button>
+                            <button class="theme-button" data-theme="red-black">
+                                <span class="theme-dot" style="background:#ff4500"></span>Qırmızı Qara
+                            </button>
+                            <button class="theme-button" data-theme="orange-dark">
+                                <span class="theme-dot" style="background:#ffa500"></span>Narıncı Tünd
+                            </button>
+                            <button class="theme-button" data-theme="purple-night">
+                                <span class="theme-dot" style="background:#a855f7"></span>Bənövşəyi Gecə
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button id="share-button-id" class="icon-btn" title="Paylaş">📤</button>
+            </div>
         </div>
-        
+    </header>
+
+    <main>
+        <!-- Stats bar -->
+        <div class="stats-bar">
+            <div class="stat-chip">
+                <span class="stat-num" id="total-count">0</span>
+                <span class="stat-label">Oyun</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num" id="avg-score">0</span>
+                <span class="stat-label">Ortalama Xal</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num" id="top-count">0</span>
+                <span class="stat-label">Top 10</span>
+            </div>
+        </div>
+
+        <div class="controls-row">
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Oyun axtar..." aria-label="Oyun axtar">
+            </div>
+            <div class="sort-group">
+                <span class="sort-label">Sırala:</span>
+                <button class="filter-button active" data-sort="az">A–Z</button>
+                <button class="filter-button" data-sort="za">Z–A</button>
+                <button class="filter-button" data-sort="score-high">⭐ Xal</button>
+            </div>
+        </div>
+
         <div id="game-list-container">
-            
             <div class="list-header">
-                <span class="header-number">Sıra</span>
+                <span class="header-number">#</span>
                 <span class="header-title">Oyun Adı</span>
                 <span class="header-score">Xal</span>
                 <span class="header-opinion">Əlinin Fikri</span>
             </div>
-            
             <section id="game-list">
-                <p class="placeholder-text">Oyun siyahısını görmək üçün yuxarıdakı kateqoriyalardan birini seçin.</p>
+                <p class="placeholder-text">Yüklənir...</p>
             </section>
-
         </div>
     </main>
+
     <footer>
-    <p>&copy; 2025 - 2026 Ali Production 💖 |
-    <a href="https://ericismyhero.github.io/my-portfolio/">Əlaqə</a> |
-    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a> </p>
-  </footer>
-<button id="scroll-to-top" title="Yuxarı Qayıt" class="scroll-to-top-hidden">
-        ▲
-    </button>
+        <p>🎮 &copy; 2025–2026 <strong>Ali Production</strong> &nbsp;|&nbsp;
+            <a href="https://ericismyhero.github.io/my-portfolio/">Portfolio</a> &nbsp;|&nbsp;
+            <a href="mailto:ericismyhero2467@gmail.com">Əlaqə</a>
+        </p>
+    </footer>
+
+    <button id="scroll-to-top" title="Yuxarı Qayıt" class="scroll-to-top-hidden">▲</button>
+
     <script src="script.js"></script>
 </body>
 </html>
